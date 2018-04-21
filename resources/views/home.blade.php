@@ -15,6 +15,8 @@
                     @endif
 
                     Jesteś zalogowany!
+
+
                 </div>
             </div>
         </div>

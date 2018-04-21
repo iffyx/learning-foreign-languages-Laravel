@@ -11,14 +11,17 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-});
+});*/
+
+Route::get('/', 'WelcomeController@index');
 
 Route::resource('roles','RoleController');
+Route::resource('sets','SetController');
 
 
-//Route::get('login', ['as' => 'login', 'uses' => 'LoginController@getView']);
+Route::get('login', ['as' => 'login', 'uses' => 'LoginController@getView']);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
