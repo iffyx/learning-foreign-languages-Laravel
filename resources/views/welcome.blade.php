@@ -114,8 +114,14 @@
                                                 @foreach ($sets as $se)
                                                     @if($scat->id == $se->subcategory_id)
                                                         <h5>
-                                                            <a href="{{ route('sets.show',$se->id) }}"
+                                                            <a href="#"{{--href="{{ route('sets.show',$se->id) }}"--}}
                                                                class="badge badge-warning">{{ $se->name}} {{ $se->subcategory_id}}</a>
+                                                            <a href="{{ route('learning1',$se->id) }}">nauka1</a>
+                                                            <a href="{{ route('learning2',$se->id) }}">nauka2</a>
+                                                            <a href="{{ route('learning3',$se->id) }}">nauka3</a>
+                                                            <a href="{{ route('test1',$se->id) }}">test1</a>
+                                                            <a href="{{ route('test2',$se->id) }}">test2</a>
+
                                                         </h5>
                                                     @endif
                                                 @endforeach

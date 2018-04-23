@@ -7,7 +7,6 @@
             <div class="pull-left">
                 <h2>{{$set->name}}</h2>
             </div>
-
             {{$set->language1}}
             {{$set->language2}}
             {{--            {{$set->set}}--}}
