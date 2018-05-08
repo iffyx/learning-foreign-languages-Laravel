@@ -6,14 +6,11 @@
             <div class="pull-left">
                 <h2 class="text-center p-3">{{$set->name}}</h2>
             </div>
-            <div class="pull-left text-center">
-                <a class="btn btn-primary" href="{{ url('/') }}"> Wróć</a>
-            </div>
         </div>
     </div>
 
     <div class="container question">
-        <div class="col-xs-12 col-sm-8 col-md-8 col-xs-offset-4 col-sm-offset-3 col-md-offset-3">
+        <div class="col-md-8 offset-2">
 
             {{--<form method="post" class="form-horizontal">--}}
             <?php
@@ -33,55 +30,57 @@
             <input type="hidden" name="id" value="{{ $set->id }}"/>
             <div id='question1' class='cont'>
                 <p class='questions' id="qname1"> <?php echo $i?>.<?php echo $array[0];?></p>
-                {{-- {!! Form::text($i, null, array('placeholder'=> $array[0],'class' => 'questions form-control', 'id' => 'qname'.$i,'disabled' => 'disabled')) !!}--}}
                 {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
-                <button class='next btn btn-success' type='submit'>Zakończ</button>
+                <button class='next btn btn-success my-3' type='submit'>Zakończ</button>
             </div>
 
             <?php
             }else{
             foreach ($line as $l){
-            $array = explode(";", $l); ?>
+            $array = explode(";", $l);
+            if($language == $set->language1_id)
+                $nr = 0;
+            else
+                $nr = 1;
+                ?>
 
             <?php if($i == 1){?>
 
 
-
-
-
-
             {!! Form::open(array('route' => 'result', 'method'=>'POST')) !!}
             <input type="hidden" name="id" value="{{ $set->id }}"/>
+            <input type="hidden" name="nr" value="{{ $nr }}"/>
             <div id='question<?php echo $i;?>' class='cont'>
-                <p class='questions' id="qname<?php echo $i;?>"> <?php echo $i?>.<?php echo $array[0];?></p>
-                {{-- {!! Form::text($i, null, array('placeholder'=> $array[0],'class' => 'questions form-control', 'id' => 'qname'.$i,'disabled' => 'disabled')) !!}--}}
+                <p class='questions' id="qname<?php echo $i;?>"> <?php echo $i?>.<?php echo $array[$nr];?></p>
                 {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
 
-                <button id='next<?php echo $i;?>' class='next btn btn-success active' type='button'>Następny</button>
+                <button id='next<?php echo $i;?>' class='next btn btn-success my-3' type='button'>Następny</button>
             </div>
 
             <?php }elseif($i < 1 || $i < $rows){?>
 
             <div id='question<?php echo $i;?>' class='cont'>
-                <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo $array[0];?></p>
+                <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo $array[$nr];?></p>
                 {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
-                <button id='next<?php echo $i;?>' class='next btn btn-success' type='button'>Następny</button>
+                <button id='next<?php echo $i;?>' class='next btn btn-success my-3' type='button'>Następny</button>
             </div>
 
             <?php }elseif($i == $rows){?>
             <div id='question<?php echo $i;?>' class='cont'>
-                <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo $array[0];?></p>
+                <p class='questions' id="qname<?php echo $i;?>"><?php echo $i?>.<?php echo $array[$nr];?></p>
                 {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
-                <button class='next btn btn-success' type='submit'>Zakończ</button>
+                <button class='next btn btn-success my-3' type='submit'>Zakończ</button>
             </div>
 
             <?php } $i++; }
             } ?>
             {!! Form::close() !!}
             {{--</form>--}}
-
+            <a class="btn btn-primary" href="{{ url('/') }}"> Wróć</a>
         </div>
     </div>
+
+
 
 
     <script>

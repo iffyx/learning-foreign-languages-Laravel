@@ -4,10 +4,10 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Kategoria</h2>
+                <h2 class="text-center">Podkategoria</h2>
             </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('categories.create') }}"> Stwórz nową kategorię</a>
+            <div class="text-center p-3">
+                <a class="btn btn-success" href="{{ route('subcategories.create') }}"> Stwórz nową podkategorię</a>
             </div>
         </div>
     </div>
@@ -20,21 +20,22 @@
     <table class="table table-bordered">
         <tr>
             <th>Nr</th>
-            <th>rola</th>
+            <th>nazwa</th>
             <th>opis</th>
+            <th>kategoria</th>
             <th></th>
 
         </tr>
-        @foreach ($categories as $category)
+        @foreach ($subcategories as $subcategory)
             <tr>
                 <td>{{ ++$i }}</td>
-                <td>{{ $category->name}}</td>
-                <td>{{ $category->description}}</td>
+                <td>{{ $subcategory->name}}</td>
+                <td>{{ $subcategory->description}}</td>
+                <td>{{ $subcategory->catname}}</td>
 
                  <td>
-                     <a class="btn btn-info" href="{{ route('categories.show',$category->id) }}">Pokaż</a>
-                     <a class="btn btn-primary" href="{{ route('categories.edit',$category->id) }}">Edytuj</a>
-                     {!! Form::open(['method' => 'DELETE','route' => ['categories.destroy', $category->id],'style'=>'display:inline']) !!}
+                     <a class="btn btn-primary" href="{{ route('subcategories.edit',$subcategory->id) }}">Edytuj</a>
+                     {!! Form::open(['method' => 'DELETE','route' => ['subcategories.destroy', $subcategory->id],'style'=>'display:inline']) !!}
                      {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
                      {!! Form::close() !!}
                  </td>
@@ -43,5 +44,11 @@
             </tr>
         @endforeach
     </table>
-    {!! $categories->render() !!}
+
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <a class="btn btn-primary" href="{{ route('home') }}"> Wróć</a>
+        </div>
+    </div>
+
 @endsection

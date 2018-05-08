@@ -2,13 +2,19 @@
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Nazwa:</strong>
-            {!! Form::text('name', null, array('placeholder' => 'Nazwa','class' => 'form-control')) !!}
+            {!! Form::text('name', null, array('placeholder' => '','class' => 'form-control')) !!}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12">
         <div class="form-group">
             <strong>Opis:</strong>
-            {!! Form::text('description', null, array('placeholder' => 'Opis','class' => 'form-control')) !!}
+            {!! Form::text('description', null, array('placeholder' => '','class' => 'form-control')) !!}
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="form-group">
+            <strong>Kategoria:</strong>
+            {{ Form::select('category_id', $category, null,  ['class' => 'form-control']) }}
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">

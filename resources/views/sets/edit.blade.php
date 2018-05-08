@@ -4,10 +4,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Edytuj podkategorię</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('subcategories.index') }}"> Wróć</a>
+                <h2 class="text-center">Edytuj zestaw</h2>
             </div>
         </div>
     </div>
@@ -21,7 +18,13 @@
             </ul>
         </div>
     @endif
-    {!! Form::model($subcategory, ['method' => 'PATCH','route' => ['subcategories.update', $subcategory->id]]) !!}
-    @include('subcategories.form')
+    {!! Form::model($set, ['method' => 'PATCH','route' => ['sets.update', $set]]) !!}
+    @include('sets.form')
     {!! Form::close() !!}
+
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <a class="btn btn-primary" href="{{ route('sets.index') }}"> Wróć</a>
+        </div>
+    </div>
 @endsection

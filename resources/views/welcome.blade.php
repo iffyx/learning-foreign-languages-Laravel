@@ -21,8 +21,9 @@
     <style>
         html, body {
             background-color: #fff;
-            color: #636b6f;
-            font-family: 'Raleway', sans-serif;
+            /*color: #636b6f;*/
+            color: #000000;
+            /*font-family: 'Raleway', sans-serif;*/
             font-weight: 100;
             height: 100vh;
             margin: 0;
@@ -55,12 +56,16 @@
         .title {
             font-size: 84px;
         }
+        .container{
+            color:#000000;
+            width: 700px;
+        }
 
-        .links > a {
-            color: #636b6f;
-            color: black;
+        .links  a {
+            /*color: #636b6f;*/
+            color: black !important;
             padding: 0 25px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
@@ -69,6 +74,10 @@
 
         .m-b-md {
             margin-bottom: 30px;
+        }
+        a{
+            color:black;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -86,60 +95,81 @@
     @endif
 
 
-    <div class="container">
+    <div class="container col-6">
         <div id="accordion">
             <div class="panel-group">
                 <div class="panel panel-default">
-
+                    <ul class="list-group list-group-flush">
                     @foreach ($category as $cat)
-
+<li class="list-group-item">
                         <div class="panel-heading">
-                            <h3 class="panel-title">
-                                <a class="badge badge-info" data-toggle="collapse"
-                                   href="#c{{ $cat->id}}">{{ $cat->name}}  {{ $cat->description}}</a>
-                            </h3>
+                            <h4 class="panel-title">
+                                <a class="" style="text-decoration: none;" data-toggle="collapse"
+                                   href="#c{{ $cat->id}}">{{ $cat->name}} </a>
+                            </h4>
                         </div>
                         <div id="c{{ $cat->id}}" class="panel-collapse collapse" data-parent="#accordion">
-                            <ul class="list-group">
+                            <ul class="list-group list-group-flush">
                                 @foreach ($subcategory as $scat)
                                     @if($scat->category_id == $cat->id)
+                                        <li class="" style="list-style-type: square" >
                                         <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a class="badge badge-success" data-toggle="collapse"
-                                                   href="#s{{ $scat->id}}">{{ $scat->name}} {{ $scat->description}} {{ $scat->category_id}}</a>
-                                            </h4>
+                                            <h5 class="panel-title">
+                                                <a class="list-group-item" data-toggle="collapse"
+                                                   href="#s{{ $scat->id}}">{{ $scat->name}}</a>
+                                            </h5>
                                         </div>
                                         <div id="s{{ $scat->id}}" class="panel-collapse collapse">
-                                            <ul class="list-group">
-                                                @foreach ($sets as $se)
-                                                    @if($scat->id == $se->subcategory_id)
-                                                        <h5>
-                                                            <a href="#"{{--href="{{ route('sets.show',$se->id) }}"--}}
-                                                               class="badge badge-warning">{{ $se->name}} {{ $se->subcategory_id}}</a>
-                                                            <a href="{{ route('learning1',$se->id) }}">nauka1</a>
-                                                            <a href="{{ route('learning2',$se->id) }}">nauka2</a>
-                                                            <a href="{{ route('learning3',$se->id) }}">nauka3</a>
-                                                            <a href="{{ route('test1',$se->id) }}">test1</a>
-                                                            <a href="{{ route('test2',$se->id) }}">test2</a>
+                                            <ul>
+                                                @foreach ($sets as $set)
+                                                    @if($scat->id == $set->subcategory_id)
+                                                        <h6>
+                                                            <strong>{{ $set->name}}</strong><br>
+                                                            {{$set->language1}} -> {{$set->language2}}
 
-                                                        </h5>
+                                                            <strong><a href="{{ route('learning1',[$set->id, $set->language1_id]) }}">nauka 1&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('learning2',[$set->id, $set->language1_id]) }}">nauka 2&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('learning3',[$set->id, $set->language1_id]) }}">nauka 3&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('learning4',[$set->id, $set->language1_id]) }}">nauka 4&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('test',[$set->id, $set->language1_id]) }}">test</a></strong>
+                                                            <br>
+                                                            {{$set->language2}} -> {{$set->language1}}
+                                                            <strong><a href="{{ route('learning1',[$set->id, $set->language2_id]) }}">nauka 1&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('learning2',[$set->id, $set->language2_id]) }}">nauka 2&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('learning3',[$set->id, $set->language2_id]) }}">nauka 3&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('learning4',[$set->id, $set->language2_id]) }}">nauka 4&nbsp;</a></strong>
+                                                            <strong><a href="{{ route('test',[$set->id, $set->language2_id]) }}">test</a></strong>
+                                                        </h6>
                                                     @endif
                                                 @endforeach
                                             </ul>
                                         </div>
+                                        </li>
                                         {{--</li>--}}
                                     @endif
                                 @endforeach
                             </ul>
                         </div>
-
+</li>
                     @endforeach
-
+                    </ul>
 
                 </div>
             </div>
         </div>
     </div>
+
+        <div class="col-4 font-weight-normal">
+            <p>Dostępne tryby nauki:</p>
+            <ul>
+                <li>nauka 1 - wyświetlenie wszystkich słówek</li>
+                <li>nauka 2 - odpytywanie (raz na słówko)</li>
+                <li>nauka 3 - odpytywanie (do poprawnej odpowiedzi)</li>
+                <li>nauka 4 - fiszki</li>
+            </ul>
+        </div>
+
+
 </div>
 
 </body>

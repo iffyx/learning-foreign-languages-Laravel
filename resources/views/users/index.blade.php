@@ -1,13 +1,10 @@
-@extends('layouts.default')
+@extends('layouts.app')
 @section('content')
 
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Role</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-success" href="{{ route('roles.create') }}"> Stwórz nową rolę</a>
+            <div>
+                <h2 class="text-center p-3">Użytkownicy</h2>
             </div>
         </div>
     </div>
@@ -17,31 +14,50 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-    <table class="table table-bordered">
+    <?php $i=0;?>
+    <table class="table table-bordered table-sm">
         <tr>
             <th>Nr</th>
-            <th>rola</th>
-            <th>opis</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Email</th>
+            <th>Rola</th>
             <th></th>
 
         </tr>
-        @foreach ($roles as $role)
+        @foreach ($users as $user)
             <tr>
                 <td>{{ ++$i }}</td>
-                <td>{{ $role->name}}</td>
-                <td>{{ $role->description}}</td>
+                <td>{{ $user->name}}</td>
+                <td>{{ $user->surname}}</td>
+                <td>{{ $user->email}}</td>
+                <td>{{ $user->role}}</td>
 
-               {{-- <td>
-                    --}}{{--<a class="btn btn-info" href="{{ route('members.show',$member->id) }}">Show</a>--}}{{--
-                    <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edytuj</a>
-                    {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                <td>
+                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Pokaż</a>
+                    <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edytuj</a>
+                    @if($user->role=='admin' ||$user->role=='user')
+                    <a class="btn btn-primary disabled" href="{{ route('permissions.edit',$user->id) }}">Nadaj uprawnienia</a>
+                    @else
+                        <a class="btn btn-primary" href="{{ route('permissions.edit',$user->id) }}">Nadaj uprawnienia</a>
+                    @endif
+                    @if(!($user->role=='admin'))
+                    {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                    {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
                     {!! Form::close() !!}
-                </td>--}}
+                        @endif
+                </td>
+
 
 
             </tr>
         @endforeach
     </table>
-    {!! $roles->render() !!}
+
+
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <a class="btn btn-primary" href="{{ route('home') }}"> Wróć</a>
+        </div>
+    </div>
 @endsection

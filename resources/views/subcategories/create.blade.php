@@ -3,10 +3,7 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2>Dodaj nową kategorię</h2>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('categories.index') }}"> Anuluj</a>
+                <h2 class="text-center">Dodaj nową podkategorię</h2>
             </div>
         </div>
     </div>
@@ -20,7 +17,13 @@
             </ul>
         </div>
     @endif
-    {!! Form::open(array('route' => 'categories.store','method'=>'POST')) !!}
-    @include('categories.form')
+    {!! Form::open(array('route' => 'subcategories.store','method'=>'POST')) !!}
+    @include('subcategories.form')
     {!! Form::close() !!}
+
+    <div class="row">
+        <div class="col-lg-12 margin-tb">
+            <a class="btn btn-primary" href="{{ route('subcategories.index') }}"> Anuluj</a>
+        </div>
+    </div>
 @endsection

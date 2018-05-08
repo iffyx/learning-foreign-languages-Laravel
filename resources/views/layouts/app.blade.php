@@ -10,8 +10,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    {{--<script src="{{ asset('js/canvas.js') }}"></script>--}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -19,6 +21,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        body{
+            font-family: Arial, Helvetica, Verdana, sans-serif;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -67,7 +75,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="py-4 col-md-10 offset-md-1">
             @yield('content')
         </main>
     </div>

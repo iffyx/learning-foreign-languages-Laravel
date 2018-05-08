@@ -18,7 +18,6 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('surname');
-            $table->string('login')->unique();
             $table->string('email')->unique();
             $table->integer('role_id')->unsigned()->nullable();
 //            $table->string('role');
@@ -36,10 +35,39 @@ class CreateUsersTable extends Migration
             array(
                 'name' => 'admin',
                 'surname' => 'admin',
-                'login' => 'admin',
                 'email' => 'admin@admin.com',
                 'role_id' => DB::table('roles')->where('name', 'admin')->value('id'),
                 'password' => bcrypt('password')
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'editor',
+                'surname' => 'editor',
+                'email' => 'editor@editor.com',
+                'role_id' => DB::table('roles')->where('name', 'redaktor')->value('id'),
+                'password' => bcrypt('editor')
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'supereditor',
+                'surname' => 'supereditor',
+                'email' => 'supereditor@editor.com',
+                'role_id' => DB::table('roles')->where('name', 'superredaktor')->value('id'),
+                'password' => bcrypt('supereditor')
+            )
+        );
+
+        DB::table('users')->insert(
+            array(
+                'name' => 'user',
+                'surname' => 'user',
+                'email' => 'user@user.com',
+                'role_id' => DB::table('roles')->where('name', 'user')->value('id'),
+                'password' => bcrypt('user')
             )
         );
     }

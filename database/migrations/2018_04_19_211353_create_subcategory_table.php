@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -13,7 +14,7 @@ class CreateSubcategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('subcategory', function (Blueprint $table) {
+        Schema::create('subcategories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('description');
@@ -21,9 +22,48 @@ class CreateSubcategoryTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('subcategory', function($table) {
-            $table->foreign('category_id')->references('id')->on('category')->onDelete('set null');
+        Schema::table('subcategories', function($table) {
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
+
+        DB::table('subcategories')->insert(
+            array(
+                'name' => 'Przedmioty szkolne',
+                'description' => 'opis pkat 1',
+                'category_id' => 1
+            )
+        );
+
+        DB::table('subcategories')->insert(
+            array(
+                'name' => 'Przybory szkolne',
+                'description' => 'opis pkat 2',
+                'category_id' => 1
+            )
+        );
+
+        DB::table('subcategories')->insert(
+            array(
+                'name' => 'Choroby',
+                'description' => 'opis pkat 3',
+                'category_id' => 2
+            )
+        );
+
+        DB::table('subcategories')->insert(
+            array(
+                'name' => 'Zwierzęta',
+                'description' => 'opis pkat 4',
+                'category_id' => 3
+            )
+        );
+        DB::table('subcategories')->insert(
+            array(
+                'name' => 'Elementy krajobrazu',
+                'description' => 'opis pkat 5',
+                'category_id' => 3
+            )
+        );
     }
 
     /**
@@ -33,6 +73,6 @@ class CreateSubcategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subcategory');
+        Schema::dropIfExists('subcategories');
     }
 }

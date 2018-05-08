@@ -24,7 +24,7 @@ class CreateRolesTable extends Migration
         DB::table('roles')->insert(
             array(
                 'name' => 'admin',
-                'description' => 'admin desc'
+                'description' => 'Ma dostęp do wszystkich funkcji'
             )
         );
 

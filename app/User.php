@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname','login','email', 'role_id' ,'password',
+        'name', 'surname','email', 'role_id' ,'password',
     ];
 
     /**
@@ -52,5 +52,19 @@ class User extends Authenticatable
     public function hasRole($role)
     {
         return DB::table('roles')->where('name', $role)->value('id');
+    }*/
+
+    public function subcategories(){
+        return $this->belongsToMany(Subcategory::Class);
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role_id == DB::table('roles')->where('name', $role)->value('id');
+    }
+
+    /*public function isAdmin()
+    {
+        return $this->admin ? true : false; // this looks for an admin column in your users table
     }*/
 }
