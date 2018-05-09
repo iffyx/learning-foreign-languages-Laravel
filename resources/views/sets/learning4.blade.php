@@ -12,99 +12,147 @@
     <div class="container question">
         <div class="col-md-8 offset-2">
 
-            {{--<form method="post" class="form-horizontal">--}}
-
             <?php
             $i = 1;
             //$str = $set->set;
 
-            $line = explode(PHP_EOL, $set->set);
-            shuffle($line);
-            $str=implode('\n', $line);
+            $str = implode('\n', $line);
             $rows = sizeof($line);
-            $string = trim(preg_replace('/\s\s+/', '\n', $str));
+            $string = trim(preg_replace('/\s\s+/', '\n', $str));?>
 
-            foreach ($line as $l){
-            $array = explode(";", $l);
+            @foreach ($line as $l)
+                <?php $array = explode(";", $l); ?>
 
-            if($language == $set->language1_id){
-                $nr = 0;
-                $nr2 = 1;
-                $dane[$i]['j1'] = $array[0];
-                $dane[$i]['j2'] = $array[1];
-            }
-            else{
-                $nr = 1;
-                $nr2 = 0;
-                $dane[$i]['j1'] = $array[1];
-                $dane[$i]['j2'] = $array[0];
-            }
-            ?>
+                @if($language == $set->language1_id)
+                    <?php $nr = 0;
+                    $nr2 = 1;
+                    $dane[$i]['j1'] = $array[0];
+                    $dane[$i]['j2'] = $array[1]; ?>
+                @else
+                    <?php $nr = 1;
+                    $nr2 = 0;
+                    $dane[$i]['j1'] = $array[1];
+                    $dane[$i]['j2'] = $array[0]; ?>
+                @endif
 
 
-            <?php if($i == 1){?>
 
-            <div id='question<?php echo $i;?>' class='cont'>
-                <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold" style="line-height: 200px; font-size: 26px;">
-                    <p class='questions'><?php echo $array[$nr];?></p>
+                @if($i == 1)
+
+                <div id='question{{$i}}' class='cont'>
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                         style="line-height: 200px; font-size: 26px;">
+                        <p class='questions'>{{$array[$nr]}}</p>
+                    </div>
+                    <div class="text-center p-1">
+                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                        Odwróć
+                    </button><br/>
+                    <button id='pre' class='previous btn btn-success m-1' type='button' disabled>
+                        Poprzedni
+                    </button>
+                    <button id='next{{$i}}' class='next btn btn-success m-1' type='button'>
+                        Następny
+                    </button></div>
                 </div>
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr' type='button' onclick="insert()">Odwróć</button>
-                <button id='next<?php echo $i;?>' class='next btn btn-success active' type='button' onclick="select()">Następny</button>
-            </div>
 
-            <div id='answer<?php echo $i;?>' class='cont'>
-                <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold" style="line-height: 200px; font-size: 26px;">
-                    <p class='answers'><?php echo $array[$nr2];?></p>
+                <div id='answer{{$i}}' class='cont'>
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                         style="line-height: 200px; font-size: 26px;">
+                        <p class='answers'>{{$array[$nr2]}}</p>
+                    </div>
+                    <div class="text-center p-1">
+                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                        Odwróć
+                    </button><br/>
+                    <button id='pre' class='previous btn btn-success m-1' type='button' disabled>
+                        Poprzedni
+                    </button>
+                    <button id='next{{$i}}' class='next btn btn-success m-1' type='button'>
+                        Następny
+                    </button>
+                    </div>
                 </div>
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr' type='button' onclick="insert()">Odwróć</button>
-                <button id='next<?php echo $i;?>' class='next btn btn-success active' type='button' onclick="select()">Następny</button>
-            </div>
 
-            <?php }elseif($i < 1 || $i < $rows){?>
+                @elseif($i < 1 || $i < $rows)
 
-            <div id='question<?php echo $i;?>' class='cont'>
-                <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold" style="line-height: 200px; font-size: 26px;">
-                    <p class='questions'><?php echo $array[$nr];?></p>
+                <div id='question{{$i}}' class='cont'>
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                         style="line-height: 200px; font-size: 26px;">
+                        <p class='questions'>{{$array[$nr]}}</p>
+                    </div>
+                    <div class="text-center p-1">
+                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                        Odwróć
+                    </button><br/>
+                    <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>
+                        Poprzedni
+                    </button>
+                    <button id='next{{$i}}' class='next btn btn-success m-1' type='button'>
+                        Następny
+                    </button>
+                    </div>
                 </div>
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr' type='button' onclick="insert()">Odwróć</button>
-                <button id='pre<?php echo $i;?>' class='previous btn btn-success' type='button' onclick="select2()">Poprzedni</button>
-                <button id='next<?php echo $i;?>' class='next btn btn-success' type='button' onclick="select()">Następny</button>
-            </div>
 
-            <div id='answer<?php echo $i;?>' class='cont'>
-                <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold" style="line-height: 200px; font-size: 26px;">
-                    <p class='answers'><?php echo $array[$nr2];?></p>
+                <div id='answer{{$i}}' class='cont'>
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                         style="line-height: 200px; font-size: 26px;">
+                        <p class='answers'>{{$array[$nr2]}}</p>
+                    </div>
+                    <div class="text-center p-1">
+                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                        Odwróć
+                    </button><br/>
+                    <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>
+                        Poprzedni
+                    </button>
+                    <button id='next{{$i}}' class='next btn btn-success m-1' type='button'>
+                        Następny
+                    </button>
+                    </div>
                 </div>
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr' type='button' onclick="insert()">Odwróć</button>
-                <button id='pre<?php echo $i;?>' class='previous btn btn-success' type='button' onclick="select2()">Poprzedni</button>
-                <button id='next<?php echo $i;?>' class='next btn btn-success' type='button' onclick="select()">Następny</button>
-            </div>
 
-            <?php }elseif($i == $rows){?>
+                @elseif($i == $rows)
 
-            <div id='question<?php echo $i;?>' class='cont'>
-                <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold" style="line-height: 200px; font-size: 26px;">
-                    <p class='questions'><?php echo $array[$nr];?></p>
+                <div id='question{{$i}}' class='cont'>
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                         style="line-height: 200px; font-size: 26px;">
+                        <p class='questions'>{{$array[$nr]}}</p>
+                    </div>
+                    <div class="text-center p-1">
+                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                        Odwróć
+                    </button><br/>
+                    <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>
+                        Poprzedni
+                    </button>
+
+                    <a href="{{url('/')}}">
+                        <button class='next btn btn-success m-1' type='submit'>Zakończ</button>
+                    </a></div>
                 </div>
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr' type='button' onclick="insert()">Odwróć</button>
-                <button id='pre<?php echo $i;?>' class='previous btn btn-success' type='button' onclick="select2()">Poprzedni</button>
-                <a href="{{url('/')}}"><button class='next btn btn-success' type='submit'>Zakończ</button></a>
-            </div>
 
-            <div id='answer<?php echo $i;?>' class='cont'>
-                <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold" style="line-height: 200px; font-size: 26px;">
-                    <p class='answers'><?php echo $array[$nr2];?></p>
+                <div id='answer{{$i}}' class='cont'>
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                         style="line-height: 200px; font-size: 26px;">
+                        <p class='answers'>{{$array[$nr2]}}</p>
+                    </div>
+                    <div class="text-center p-1">
+                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                        Odwróć
+                    </button><br/>
+                    <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>
+                        Poprzedni
+                    </button>
+                    <a href="{{url('/')}}">
+                        <button class='next btn btn-success m-1' type='submit'>Zakończ</button>
+                    </a>
+                    </div>
                 </div>
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr' type='button' onclick="insert()">Odwróć</button>
-                <button id='pre<?php echo $i;?>' class='previous btn btn-success' type='button' onclick="select2()">Poprzedni</button>
-                <a href="{{url('/')}}"><button class='next btn btn-success' type='submit'>Zakończ</button></a>
-            </div>
+                    @endif
 
-            <?php } $i++;
-            } $i=0?>
-
-
-
+                <?php  $i++;?>
+            @endforeach
 
 
         </div>
@@ -117,38 +165,15 @@
 
     <script>
 
-        var i=0;
+        var i = 0;
         var data = "<?php echo $string; ?>";
-        var lan='<?php echo $language; ?>';
+        var lan = '<?php echo $language; ?>';
 
-        var nr =0;
-        if(lan==='1')
-            nr=1;
+        var nr = 0;
+        if (lan === '1')
+            nr = 1;
         else
-            nr=0;
-
-        function insert()
-        {
-            /*var as = res[i].split(";");
-            document.getElementById("demo").innerHTML=as[nr];
-            if(document.getElementsByClassName('form-control')[i].value==as[nr]){
-                document.getElementById("demo").innerHTML="Dobrze!";
-                document.getElementById("demo").style.color = "green";
-            }
-            else{
-                document.getElementById("demo").innerHTML="Źle! Poprawna odpowiedź to: "+as[nr];
-                document.getElementById("demo").style.color = "red";
-            }*/
-        }
-        function select()
-        {
-            i++;
-        }
-        function select2()
-        {
-            i--;
-        }
-
+            nr = 0;
 
         $('.cont').addClass('hide');
         count = $('.questions').length;
@@ -159,34 +184,34 @@
             last = parseInt(element.substr(element.length - 1));
             nex = last + 1;
             $('#question' + last).addClass('hide');
-            $('#answer'+last).addClass('hide');
+            $('#answer' + last).addClass('hide');
 
             $('#question' + nex).removeClass('hide');
         });
 
-        $(document).on('click','.previous',function(){
-            element=$(this).attr('id');
+        $(document).on('click', '.previous', function () {
+            element = $(this).attr('id');
             last = parseInt(element.substr(element.length - 1));
-            pre=last-1;
-            $('#question'+last).addClass('hide');
-            $('#answer'+last).addClass('hide');
+            pre = last - 1;
+            $('#question' + last).addClass('hide');
+            $('#answer' + last).addClass('hide');
 
-            $('#question'+pre).removeClass('hide');
+            $('#question' + pre).removeClass('hide');
         });
 
-        $(document).on('click','.spr',function(){
-            element=$(this).attr('id');
+        $(document).on('click', '.spr', function () {
+            element = $(this).attr('id');
             last = parseInt(element.substr(element.length - 1));
-            pre=last-1;
+            pre = last - 1;
             //$('#answer'+last).addClass('hide');
             //$('#question' + last).addClass('hide');
-            if($('#answer'+last).hasClass('hide')){
+            if ($('#answer' + last).hasClass('hide')) {
                 $('#question' + last).addClass('hide');
-                $('#answer'+last).removeClass('hide');
+                $('#answer' + last).removeClass('hide');
             }
-            else{
+            else {
                 $('#question' + last).removeClass('hide');
-                $('#answer'+last).addClass('hide');
+                $('#answer' + last).addClass('hide');
             }
         });
 

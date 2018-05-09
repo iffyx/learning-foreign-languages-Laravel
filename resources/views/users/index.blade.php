@@ -14,7 +14,7 @@
             <p>{{ $message }}</p>
         </div>
     @endif
-    <?php $i=0;?>
+    <?php $i = 0;?>
     <table class="table table-bordered table-sm">
         <tr>
             <th>Nr</th>
@@ -37,23 +37,21 @@
                     <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Pokaż</a>
                     <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edytuj</a>
                     @if($user->role=='admin' ||$user->role=='user')
-                    <a class="btn btn-primary disabled" href="{{ route('permissions.edit',$user->id) }}">Nadaj uprawnienia</a>
+                        <a class="btn btn-primary disabled" href="{{ route('permissions.edit',$user->id) }}">Nadaj
+                            uprawnienia</a>
                     @else
-                        <a class="btn btn-primary" href="{{ route('permissions.edit',$user->id) }}">Nadaj uprawnienia</a>
+                        <a class="btn btn-primary" href="{{ route('permissions.edit',$user->id) }}">Nadaj
+                            uprawnienia</a>
                     @endif
                     @if(!($user->role=='admin'))
-                    {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
-                        @endif
+                        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
+                        {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
+                        {!! Form::close() !!}
+                    @endif
                 </td>
-
-
-
             </tr>
         @endforeach
     </table>
-
 
     <div class="row">
         <div class="col-lg-12 margin-tb">

@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.defaultquiz')
 
 @section('content')
     <div class="row">
@@ -8,35 +8,30 @@
             </div>
         </div>
     </div>
+
     <table class="table table-bordered">
         <tr>
-            <?php if ($language == $set->language1) {
-                echo "<th>" . $set->language1 . "</th>";
-                echo "<th>" . $set->language2 . "</th>";
-            } else {
-                echo "<th>" . $set->language2 . "</th>";
-                echo "<th>" . $set->language1 . "</th>";
-            }
-            ?>
+            @if ($language == $set->lan1)
+                <th> {{$set->language1}}</th>
+                <th>{{$set->language2}}</th>
+            @else
+                <th>{{$set->language2 }}</th>
+                <th> {{ $set->language1}}</th>
+            @endif
         </tr>
 
-        <?php
-        $string = $set->set;
-        $line = explode(PHP_EOL, $string);
-        shuffle($line);
-        foreach ($line as $l) {
-            echo " <tr>";
-            $array = explode(";", $l);
-            if ($language == $set->language1) {
-                echo "<td>" . $array[0] . "</td>";
-                echo "<td>" . $array[1] . "</td>";
-            } else {
-                echo "<td>" . $array[1] . "</td>";
-                echo "<td>" . $array[0] . "</td>";
-            }
-            echo "</tr>";
-        }
-        ?>
+        @foreach($lines as $l)
+            <tr>
+                <?php $array = explode(";", $l);?>
+                @if ($language == $set->lan1)
+                    <td>  {{$array[0]}} </td>
+                    <td>  {{$array[1]}} </td>
+                @else
+                    <td>  {{$array[1]}} </td>
+                    <td>  {{$array[0]}} </td>
+                @endif
+            </tr>
+        @endforeach
     </table>
 
     <div class="pull-left">

@@ -36,7 +36,17 @@ class PermissionController extends Controller
     public function edit(Request $request, $user)
     {
         $subcategories = DB::table('subcategories')->get();
-        return view('users.pedit', compact('user', 'subcategories'));
+      //  $permissions = DB::table('permissions')->get();
+
+
+        $permissions = DB::table('subcategories')->leftjoin('permissions', function ($join) {
+            $join->on('subcategories.id', '=', 'permissions.subcategory_id');
+        })
+            ->select('subcategories.id','subcategories.name', 'permissions.user_id')->distinct()
+            ->get();
+
+
+        return view('users.pedit', compact('user', 'subcategories', 'permissions'));
     }
 
     public function update(Request $request, $t, $id1, $id2)

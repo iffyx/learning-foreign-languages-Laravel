@@ -30,7 +30,15 @@
             {{ Form::select('subcategory_id', $subcategory,null,  ['class' => 'form-control']) }}
         </div>
     </div>
-{{--    {{ Form::hidden('user_id', Auth::id()) }}--}}
+
+    @if(!Auth::user()->hasRole('user'))
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Czy prywatny?:</strong>
+                {{ Form::checkbox('private', true) }}
+            </div>
+        </div>
+    @endif
     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
         <button type="submit" class="btn btn-primary">Zapisz</button>
     </div>

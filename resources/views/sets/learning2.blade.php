@@ -13,44 +13,47 @@
 
             <?php
             $i = 1;
-            //$str = $set->set;
-
-            $line = explode(PHP_EOL, $set->set);
-            shuffle($line);
-            $str=implode('\n', $line);
+            $str = implode('\n', $line);
             $rows = sizeof($line);
-            $string = trim(preg_replace('/\s\s+/', '\n', $str));
+            $string = trim(preg_replace('/\s\s+/', '\n', $str));?>
 
-            foreach ($line as $l){
-                $array = explode(";", $l);
+            @foreach($line as $l)
+                <?php $array = explode(";", $l);?>
+                @if ($language == $set->language1_id)
+                    <?php $nr = 0?>
+                @else
+                    <?php $nr = 1?>
+                @endif
 
-                if($language == $set->language1_id)
-                    $nr = 0;
-                else
-                    $nr = 1;
-            ?>
+                @if($i < $rows)
+                    <div id='question{{$i}}' class='cont'>
+                        <p class='questions' id="qname{{$i}}">{{$i}}. {{$array[$nr]}}</p>
+                        {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
+                        <button id='ans{{$i}}' class='btn btn-success spr my-3' type='button'
+                                onclick="insert()">
+                            Sprawdź
+                        </button>
+                        <button id='next{{$i}}' class='next btn btn-success my-3' type='button'
+                                onclick="select()">
+                            Następny
+                        </button>
+                    </div>
 
-            <?php if( $i < $rows){?>
-
-            <div id='question<?php echo $i;?>' class='cont'>
-                <p class='questions' id="qname<?php echo $i;?>"><?php echo $i. ". ". $array[$nr];?></p>
-                {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr my-3' type='button' onclick="insert()">Sprawdź</button>
-                <button id='next<?php echo $i;?>' class='next btn btn-success my-3' type='button' onclick="select()">Następny</button>
-            </div>
-
-            <?php }elseif($i == $rows){?>
-
-            <div id='question<?php echo $i;?>' class='cont'>
-                <p class='questions' id="qname<?php echo $i;?>"><?php echo $i. ". ". $array[$nr];?></p>
-                {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
-                <button id='ans<?php echo $i;?>' class='btn btn-success spr my-3' type='button' onclick="insert()">Sprawdź</button>
-                <a href="{{url('/')}}"><button class='next btn btn-success my-3' type='submit'>Zakończ</button></a>
-            </div>
-
-            <?php } $i++;
-            } $i=0?>
-
+                @elseif($i == $rows)
+                    <div id='question{{$i}}' class='cont'>
+                        <p class='questions' id="qname{{$i}}">{{$i}}. {{$array[$nr]}}</p>
+                        {!! Form::text('odp'.$i, null, array('class' => 'form-control', 'id' => 'ans'.$i)) !!}
+                        <button id='ans{{$i}}' class='btn btn-success spr my-3' type='button'
+                                onclick="insert()">
+                            Sprawdź
+                        </button>
+                        <a href="{{url('/')}}">
+                            <button class='next btn btn-success my-3' type='submit'>Zakończ</button>
+                        </a>
+                    </div>
+                @endif
+                <?php  $i++;?>
+            @endforeach
 
             <p id="demo">&nbsp;</p>
             <a class="btn btn-primary" href="{{ url('/') }}"> Wróć</a>
@@ -58,44 +61,37 @@
         </div>
     </div>
 
-
     <script>
 
-        var i=0;
+        var i = 0;
         var data = "<?php echo $string; ?>";
         var res = data.split("\n");
-        var lan='<?php echo $language; ?>';
+        var lan = '<?php echo $language; ?>';
 
-        var nr =0;
-        if(lan==='1')
-            nr=1;
+        var nr = 0;
+        if (lan === '1')
+            nr = 1;
         else
-            nr=0;
+            nr = 0;
 
-        function insert()
-        {
-
+        function insert() {
             var as = res[i].split(";");
-            document.getElementById("demo").innerHTML=as[nr];
-            // document.getElementsByClassName('form-control')[i].value;
-            if(document.getElementsByClassName('form-control')[i].value==as[nr]){
-                document.getElementById("demo").innerHTML="Dobrze!";
+            document.getElementById("demo").innerHTML = as[nr];
+            if (document.getElementsByClassName('form-control')[i].value == as[nr]) {
+                document.getElementById("demo").innerHTML = "Dobrze!";
                 document.getElementById("demo").style.color = "green";
-                //result++;
-                //document.getElementById("result").innerHTML=result;
-
             }
-            else{
-                document.getElementById("demo").innerHTML="Źle! Poprawna odpowiedź to: "+as[nr];
+            else {
+                document.getElementById("demo").innerHTML = "Źle! Poprawna odpowiedź to: " + as[nr];
                 document.getElementById("demo").style.color = "red";
+                document.getElementById("ans" + (i + 1)).disabled = true;
             }
         }
-        function select()
-        {
-            i++;
-            document.getElementById("demo").innerHTML="&nbsp;";
-        }
 
+        function select() {
+            i++;
+            document.getElementById("demo").innerHTML = "&nbsp;";
+        }
 
         $('.cont').addClass('hide');
         count = $('.questions').length;
@@ -110,7 +106,6 @@
 
             $('#question' + nex).removeClass('hide');
         });
-
 
     </script>
 

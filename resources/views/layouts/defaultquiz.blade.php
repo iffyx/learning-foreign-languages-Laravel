@@ -62,8 +62,11 @@
             top: 18px;
         }
 
-        .content {
+        .container {
             /*text-align: center;*/
+        }
+        .padd{
+            margin-top:100px;
         }
 
         .title {
@@ -101,7 +104,7 @@
         </div>
     @endif
 
-    <div class="container">
+    <div class="container padd">
         @yield('content')
     </div>
 </div>

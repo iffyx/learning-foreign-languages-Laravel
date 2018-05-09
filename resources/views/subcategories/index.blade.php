@@ -24,7 +24,6 @@
             <th>opis</th>
             <th>kategoria</th>
             <th></th>
-
         </tr>
         @foreach ($subcategories as $subcategory)
             <tr>
@@ -32,15 +31,12 @@
                 <td>{{ $subcategory->name}}</td>
                 <td>{{ $subcategory->description}}</td>
                 <td>{{ $subcategory->catname}}</td>
-
-                 <td>
-                     <a class="btn btn-primary" href="{{ route('subcategories.edit',$subcategory->id) }}">Edytuj</a>
-                     {!! Form::open(['method' => 'DELETE','route' => ['subcategories.destroy', $subcategory->id],'style'=>'display:inline']) !!}
-                     {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
-                     {!! Form::close() !!}
-                 </td>
-
-
+                <td>
+                    <a class="btn btn-primary" href="{{ route('subcategories.edit',$subcategory->id) }}">Edytuj</a>
+                    {!! Form::open(['method' => 'DELETE','route' => ['subcategories.destroy', $subcategory->id],'style'=>'display:inline']) !!}
+                    {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
+                    {!! Form::close() !!}
+                </td>
             </tr>
         @endforeach
     </table>

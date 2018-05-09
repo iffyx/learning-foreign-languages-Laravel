@@ -26,31 +26,29 @@
             <th>zestaw</th>
             <th>podkategoria</th>
             <th></th>
-
         </tr>
 
-
         @if(Auth::user()->hasRole('admin'))
-        @foreach ($sets as $set)
-            <tr>
-                <td>{{ ++$i }}</td>
-                <td>{{ $set->name}}</td>
-                <td>{{ $set->language1}}</td>
-                <td>{{ $set->language2}}</td>
-                <td>{{ $set->set}}</td>
-                <td>{{ $set->subcategory}}</td>
-                <td>
-                    <a class="btn btn-primary" href="{{ route('sets.edit',$set->id) }}">Edytuj</a>
-                    {!! Form::open(['method' => 'DELETE','route' => ['sets.destroy', $set->id],'style'=>'display:inline']) !!}
-                    {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
-                    {!! Form::close() !!}
-                </td>
-            </tr>
-        @endforeach
-            @elseif(Auth::user()->hasRole('superredaktor'))
-                @foreach($permission as $perm)
-                    @foreach ($sets as $set)
-                        @if($perm->subcategory_id==$set->subid)
+            @foreach ($sets as $set)
+                <tr>
+                    <td>{{ ++$i }}</td>
+                    <td>{{ $set->name}}</td>
+                    <td>{{ $set->language1}}</td>
+                    <td>{{ $set->language2}}</td>
+                    <td>{{ $set->set}}</td>
+                    <td>{{ $set->subcategory}}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{{ route('sets.edit',$set->id) }}">Edytuj</a>
+                        {!! Form::open(['method' => 'DELETE','route' => ['sets.destroy', $set->id],'style'=>'display:inline']) !!}
+                        {!! Form::submit('Usuń', ['class' => 'btn btn-danger']) !!}
+                        {!! Form::close() !!}
+                    </td>
+                </tr>
+            @endforeach
+        @elseif(Auth::user()->hasRole('superredaktor'))
+            @foreach($permission as $perm)
+                @foreach ($sets as $set)
+                    @if($perm->subcategory_id==$set->subid)
                         <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $set->name}}</td>
@@ -65,9 +63,9 @@
                                 {!! Form::close() !!}
                             </td>
                         </tr>
-                        @endif
-                    @endforeach
+                    @endif
                 @endforeach
+            @endforeach
         @elseif(Auth::user()->hasRole('redaktor'))
             @foreach($permission as $perm)
                 @foreach ($sets as $set)
@@ -89,9 +87,8 @@
                     @endif
                 @endforeach
             @endforeach
-            @endif
+        @endif
     </table>
-
 
     <div class="row">
         <div class="col-lg-12 margin-tb">
