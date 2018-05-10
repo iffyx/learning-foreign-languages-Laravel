@@ -23,7 +23,7 @@ class CreateSubcategoryTable extends Migration
         });
 
         Schema::table('subcategories', function($table) {
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
 
         DB::table('subcategories')->insert(

@@ -26,7 +26,7 @@ class SetController extends Controller
             ->join('subcategories', function ($join) {
                 $join->on('sets.subcategory_id', '=', 'subcategories.id');
             })
-            ->select('sets.id', 'sets.name', 'sets.set', 'sets.user_id', 'l1.name as language1', 'l2.name as language2', 'subcategories.id as subid', 'subcategories.name as subcategory')
+            ->select('sets.id', 'sets.name', 'sets.set', 'sets.private', 'sets.user_id', 'l1.name as language1', 'l2.name as language2', 'subcategories.id as subid', 'subcategories.name as subcategory')
             ->get();
 
         return view('sets.index', compact('sets', 'user', 'permission'))
@@ -35,11 +35,8 @@ class SetController extends Controller
 
     public function create()
     {
-
-        //$languages = DB::table('languages')->get();
         $languages = Language::pluck('name', 'id');
         if (Auth::user()->hasRole('redaktor') or Auth::user()->hasRole('superredaktor')) {
-
 
             $subcategory2 = DB::table('subcategories')->join('permissions', function ($join) {
                 $join->on('subcategories.id', '=', 'permissions.subcategory_id');
@@ -65,6 +62,8 @@ class SetController extends Controller
 
         $private = $request->input('private');
 
+        $visible = $request->input('visible');
+
         $new = Set::create($request->all());
 
         if ($private == true) {
@@ -72,6 +71,13 @@ class SetController extends Controller
                 ->where('id', $new->id)
                 ->update(['private' => true]);
         }
+
+        if ($visible == false) {
+            DB::table('sets')
+                ->where('id', $new->id)
+                ->update(['visible' => false]);
+        }
+
 
         DB::table('sets')
             ->where('id', $new->id)
@@ -82,8 +88,6 @@ class SetController extends Controller
                 ->where('id', $new->id)
                 ->update(['private' => true]);
         }
-        // Set::create(array_merge($request->all(), ['user_id' => '1']));
-        //Set::create($request->all() + ['user_id' => 2]);
         return redirect()->route('sets.index')
             ->with('success', 'Zestaw dodany prawidłowo');
     }
@@ -93,9 +97,10 @@ class SetController extends Controller
         return view('sets.show', compact('sets'));
     }
 
-    public function edit(Set $s)
+    public function edit(Set $set)
     {
-        $set = DB::table('sets')->join('languages as l1', function ($join) {
+        // $set = DB::table('sets')->get();
+        /*$setsss = DB::table('sets')->join('languages as l1', function ($join) {
             $join->on('sets.language1_id', '=', 'l1.id');
         })
             ->join('languages as l2', function ($join) {
@@ -105,14 +110,12 @@ class SetController extends Controller
                 $join->on('sets.subcategory_id', '=', 'subcategories.id');
             })
             ->select('sets.id', 'sets.name', 'sets.set', 'l1.name as language1', 'l2.name as language2', 'subcategories.name as subcategory')->where('sets.id', '=', $s->id)
-            ->get();
+            ->get();*/
 
         $languages = Language::pluck('name', 'id');
 
 
-        //if( Auth::id()==3||Auth::id()==4){
         if (Auth::user()->hasRole('redaktor') or Auth::user()->hasRole('superredaktor')) {
-
 
             $subcategory2 = DB::table('subcategories')->join('permissions', function ($join) {
                 $join->on('subcategories.id', '=', 'permissions.subcategory_id');
@@ -122,17 +125,42 @@ class SetController extends Controller
             $subcategory = $subcategory2->pluck('name', 'id');
         } else
             $subcategory = Subcategory::pluck('name', 'id');
-        //$permission = DB::table('permissions')->where('user_id', Auth::id())->get();
 
         return view('sets.edit', compact('set', 'languages', 'subcategory', 'permission'));
     }
 
-    public function update(Request $request, Set $sets)
+    public function update(Request $request, Set $set)
     {
         request()->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'set' => 'required'
         ]);
-        $sets->update($request->all());
+        $set->update($request->all());
+
+        $private = $request->input('private');
+
+        $visible = $request->input('visible');
+
+        if ($private == true) {
+            DB::table('sets')
+                ->where('id', $set->id)
+                ->update(['private' => true]);
+        } else {
+            DB::table('sets')
+                ->where('id', $set->id)
+                ->update(['private' => false]);
+        }
+
+        if ($visible == false) {
+            DB::table('sets')
+                ->where('id', $set->id)
+                ->update(['visible' => false]);
+        } else {
+            DB::table('sets')
+                ->where('id', $set->id)
+                ->update(['visible' => true]);
+        }
+
         return redirect()->route('sets.index')
             ->with('success', 'Zestaw edytowany prawidłowo');
     }
@@ -144,10 +172,8 @@ class SetController extends Controller
             ->with('success', 'Zestaw usunięty prawidłowo');
     }
 
-
     public function learning1($id, $language)
     {
-
         $set = DB::table('sets')->join('languages as l1', function ($join) {
             $join->on('sets.language1_id', '=', 'l1.id');
         })
@@ -168,7 +194,14 @@ class SetController extends Controller
 
     public function learning2($id, $language)
     {
-        $set = DB::table('sets')->where('id', $id)->first();
+       // $set = DB::table('sets')->where('id', $id)->first();
+
+        $set = DB::table('sets')->join('subcategories', function ($join) {
+                $join->on('sets.subcategory_id', '=', 'subcategories.id');
+            })
+            ->select('sets.id', 'sets.name', 'sets.language1_id','sets.language2_id','subcategories.name as subcategory')->where('sets.id', $id)->first();
+
+
         $s = DB::table('sets')->where('id', $id)->value('set');
         $line = explode(PHP_EOL, $s);
         shuffle($line);
@@ -178,7 +211,10 @@ class SetController extends Controller
 
     public function learning3($id, $language)
     {
-        $set = DB::table('sets')->where('id', $id)->first();
+        $set = DB::table('sets')->join('subcategories', function ($join) {
+            $join->on('sets.subcategory_id', '=', 'subcategories.id');
+        })
+            ->select('sets.id', 'sets.name', 'sets.language1_id','sets.language2_id','subcategories.name as subcategory')->where('sets.id', $id)->first();
         $s = DB::table('sets')->where('id', $id)->value('set');
         $line = explode(PHP_EOL, $s);
         shuffle($line);
@@ -189,7 +225,10 @@ class SetController extends Controller
     public function learning4($id, $language)
     {
 
-        $set = DB::table('sets')->where('id', $id)->first();
+        $set = DB::table('sets')->join('subcategories', function ($join) {
+            $join->on('sets.subcategory_id', '=', 'subcategories.id');
+        })
+            ->select('sets.id', 'sets.name', 'sets.language1_id','sets.language2_id','subcategories.name as subcategory')->where('sets.id', $id)->first();
         $s = DB::table('sets')->where('id', $id)->value('set');
         $line = explode(PHP_EOL, $s);
         shuffle($line);
@@ -208,14 +247,12 @@ class SetController extends Controller
     {
         $id = $request->input('id');
         $nr = $request->input('nr');
-        // $str = $request->input('str');
 
         $set = DB::table('sets')->where('id', $id)->first();
 
         $input = $request->except('_token', 'id', 'nr', 'str');
 
         return view('sets.result', compact('input', 'set', 'id', 'nr'));
-
 
     }
 

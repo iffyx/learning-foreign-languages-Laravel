@@ -18,6 +18,7 @@
             </ul>
         </div>
     @endif
+
     {!! Form::model($set, ['method' => 'PATCH','route' => ['sets.update', $set]]) !!}
     @include('sets.form')
     {!! Form::close() !!}

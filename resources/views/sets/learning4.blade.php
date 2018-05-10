@@ -3,7 +3,8 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2 class="text-center p-3">{{$set->name}}</h2>
+                <h3 class="text-center p-2">{{$set->subcategory}}</h3>
+                <h4 class="text-center p-2">{{$set->name}}</h4>
             </div>
 
         </div>
@@ -40,12 +41,12 @@
                 @if($i == 1)
 
                 <div id='question{{$i}}' class='cont'>
-                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold text-white bg-info"
                          style="line-height: 200px; font-size: 26px;">
                         <p class='questions'>{{$array[$nr]}}</p>
                     </div>
                     <div class="text-center p-1">
-                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                    <button id='ans{{$i}}' class='btn btn-danger spr m-1' type='button'>
                         Odwróć
                     </button><br/>
                     <button id='pre' class='previous btn btn-success m-1' type='button' disabled>
@@ -57,12 +58,12 @@
                 </div>
 
                 <div id='answer{{$i}}' class='cont'>
-                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold text-white bg-dark"
                          style="line-height: 200px; font-size: 26px;">
                         <p class='answers'>{{$array[$nr2]}}</p>
                     </div>
                     <div class="text-center p-1">
-                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                    <button id='ans{{$i}}' class='btn btn-danger spr m-1' type='button'>
                         Odwróć
                     </button><br/>
                     <button id='pre' class='previous btn btn-success m-1' type='button' disabled>
@@ -77,12 +78,12 @@
                 @elseif($i < 1 || $i < $rows)
 
                 <div id='question{{$i}}' class='cont'>
-                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold text-white bg-info"
                          style="line-height: 200px; font-size: 26px;">
                         <p class='questions'>{{$array[$nr]}}</p>
                     </div>
                     <div class="text-center p-1">
-                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                    <button id='ans{{$i}}' class='btn btn-danger spr m-1' type='button'>
                         Odwróć
                     </button><br/>
                     <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>
@@ -95,12 +96,12 @@
                 </div>
 
                 <div id='answer{{$i}}' class='cont'>
-                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold text-white bg-dark"
                          style="line-height: 200px; font-size: 26px;">
                         <p class='answers'>{{$array[$nr2]}}</p>
                     </div>
                     <div class="text-center p-1">
-                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                    <button id='ans{{$i}}' class='btn btn-danger spr m-1' type='button'>
                         Odwróć
                     </button><br/>
                     <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>
@@ -115,12 +116,12 @@
                 @elseif($i == $rows)
 
                 <div id='question{{$i}}' class='cont'>
-                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold text-white bg-info"
                          style="line-height: 200px; font-size: 26px;">
                         <p class='questions'>{{$array[$nr]}}</p>
                     </div>
                     <div class="text-center p-1">
-                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                    <button id='ans{{$i}}' class='btn btn-danger spr m-1' type='button'>
                         Odwróć
                     </button><br/>
                     <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>
@@ -133,12 +134,12 @@
                 </div>
 
                 <div id='answer{{$i}}' class='cont'>
-                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold"
+                    <div class="card text-center w-50 offset-md-3 my-3 font-weight-bold text-white bg-dark"
                          style="line-height: 200px; font-size: 26px;">
                         <p class='answers'>{{$array[$nr2]}}</p>
                     </div>
                     <div class="text-center p-1">
-                    <button id='ans{{$i}}' class='btn btn-success spr m-1' type='button'>
+                    <button id='ans{{$i}}' class='btn btn-danger spr m-1' type='button'>
                         Odwróć
                     </button><br/>
                     <button id='pre{{$i}}' class='previous btn btn-success m-1' type='button'>

@@ -22,7 +22,6 @@ Route::get('/', 'WelcomeController@index');
 
 //Route::resource('roles','RoleController');
 
-//Route::resource('sets','SetController');
 Route::get('learning1/{id}/{language}', ['as' => 'learning1', 'uses' => 'SetController@learning1']);
 Route::get('learning2/{id}/{language}', ['as' => 'learning2', 'uses' => 'SetController@learning2']);
 Route::get('learning3/{id}/{language}', ['as' => 'learning3', 'uses' => 'SetController@learning3']);
@@ -47,42 +46,4 @@ Route::group(['middleware' => ['auth', 'admin']], function() {
     Route::resource('subcategories','SubcategoryController');
 });
 
-Route::group(['middleware' => 'admin' or 'editor' or 'supereditor'], function()
-{
-    Route::resource('sets','SetController');
-});
-
-
-
-/*if(Auth::user()->hasRole('admin')){
-    Route::resource('users','UserController');
-    Route::resource('roles','RoleController');
-    Route::resource('categories','CategoryController');
-    Route::resource('subcategories','SubcategoryController');
-    Route::resource('sets','SetController');
-}*/
-/*Route::group(['middleware' => 'admin'], function () {
-    Route::resource('users','UserController');
-    Route::resource('roles','RoleController');
-    Route::resource('categories','CategoryController');
-    Route::resource('subcategories','SubcategoryController');
-    Route::resource('sets','SetController');
-});*/
-
-/*Route::group(['middleware' => ['role:admin']], function () {
-    Route::resource('users','UserController');
-    Route::resource('roles','RoleController');
-    Route::resource('categories','CategoryController');
-    Route::resource('subcategories','SubcategoryController');
-    Route::resource('sets','SetController');
-});*/
-
-
-
-/*Route::get('/admin', function(){
-    echo "Hello Admin";
-})->middleware('auth','admin');
-
-Route::get('/user', function(){
-    echo "Hello Agent";
-})->middleware('auth','user');*/
+Route::resource('sets','SetController');

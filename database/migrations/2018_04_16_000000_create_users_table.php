@@ -55,7 +55,7 @@ class CreateUsersTable extends Migration
             array(
                 'name' => 'supereditor',
                 'surname' => 'supereditor',
-                'email' => 'supereditor@editor.com',
+                'email' => 'supereditor@supereditor.com',
                 'role_id' => DB::table('roles')->where('name', 'superredaktor')->value('id'),
                 'password' => bcrypt('supereditor')
             )

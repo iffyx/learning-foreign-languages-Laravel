@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2 class="text-center p-3">{{$set->name}}</h2>
+                <h3 class="text-center p-2">{{$set->subcategory}}</h3>
+                <h4 class="text-center p-2">{{$set->name}}</h4>
             </div>
         </div>
     </div>
@@ -36,8 +37,8 @@
 
                 <?php  $i++;?>
             @endforeach
-            <button class='zak btn btn-success' type='submit' onclick="spr()">Sprawdź</button>
-            <button class='btn btn-success ok' type='submit' onclick="ok()">Ok!</button>
+            <button class='zak btn btn-success my-3' type='submit' onclick="spr()">Sprawdź</button>
+            <button class='btn btn-success ok my-3' type='submit' onclick="ok()">Ok!</button>
             <p id="demo"></p>
 
             <div class="row">
@@ -68,10 +69,13 @@
                 var as = res[i].split(";");
                 if (document.getElementsByClassName('form-control')[i].value == as[nr]) {
                     $('#aname' + (i + 1)).removeClass('hide');
-                    document.getElementById("aname" + (i + 1)).innerHTML = 'Dobrze';
+                    document.getElementById("aname" + (i + 1)).innerHTML = 'Dobrze!';
+                    document.getElementById("aname" + (i + 1)).style.color = "green";
                 }
                 else {
+
                     $('#aname' + (i + 1)).removeClass('hide');
+                    document.getElementById("aname" + (i + 1)).style.color = "red";
                 }
                 document.getElementById("ans" + (i + 1)).disabled = true;
 

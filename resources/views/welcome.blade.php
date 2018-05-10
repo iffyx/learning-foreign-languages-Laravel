@@ -124,35 +124,9 @@
                                                     <div id="s{{ $scat->id}}" class="panel-collapse collapse">
                                                         <ul>
                                                             @foreach ($sets as $set)
-                                                                @if($scat->id == $set->subcategory_id)
-                                                                    @if($set->private == false)
-                                                                        <h6>
-                                                                            <strong>{{ $set->name}}</strong><br>
-                                                                            {{$set->language1}} -> {{$set->language2}}
-
-                                                                            <strong><a href="{{ route('learning1',[$set->id, $set->language1_id]) }}">nauka
-                                                                                    1&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('learning2',[$set->id, $set->language1_id]) }}">nauka
-                                                                                    2&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('learning3',[$set->id, $set->language1_id]) }}">nauka
-                                                                                    3&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('learning4',[$set->id, $set->language1_id]) }}">nauka
-                                                                                    4&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('test',[$set->id, $set->language1_id]) }}">test</a></strong>
-                                                                            <br>
-                                                                            {{$set->language2}} -> {{$set->language1}}
-                                                                            <strong><a href="{{ route('learning1',[$set->id, $set->language2_id]) }}">nauka
-                                                                                    1&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('learning2',[$set->id, $set->language2_id]) }}">nauka
-                                                                                    2&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('learning3',[$set->id, $set->language2_id]) }}">nauka
-                                                                                    3&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('learning4',[$set->id, $set->language2_id]) }}">nauka
-                                                                                    4&nbsp;</a></strong>
-                                                                            <strong><a href="{{ route('test',[$set->id, $set->language2_id]) }}">test</a></strong>
-                                                                        </h6>
-                                                                    @else
-                                                                        @if($set->user_id == Auth::id())
+                                                                @if($set->visible==true)
+                                                                    @if($scat->id == $set->subcategory_id)
+                                                                        @if($set->private == false)
                                                                             <h6>
                                                                                 <strong>{{ $set->name}}</strong><br>
                                                                                 {{$set->language1}}
@@ -180,8 +154,38 @@
                                                                                         4&nbsp;</a></strong>
                                                                                 <strong><a href="{{ route('test',[$set->id, $set->language2_id]) }}">test</a></strong>
                                                                             </h6>
-                                                                        @endif
+                                                                        @else
+                                                                            @if($set->user_id == Auth::id())
+                                                                                <h6>
+                                                                                    <strong>{{ $set->name}}</strong><br>
+                                                                                    {{$set->language1}}
+                                                                                    -> {{$set->language2}}
 
+                                                                                    <strong><a href="{{ route('learning1',[$set->id, $set->language1_id]) }}">nauka
+                                                                                            1&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('learning2',[$set->id, $set->language1_id]) }}">nauka
+                                                                                            2&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('learning3',[$set->id, $set->language1_id]) }}">nauka
+                                                                                            3&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('learning4',[$set->id, $set->language1_id]) }}">nauka
+                                                                                            4&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('test',[$set->id, $set->language1_id]) }}">test</a></strong>
+                                                                                    <br>
+                                                                                    {{$set->language2}}
+                                                                                    -> {{$set->language1}}
+                                                                                    <strong><a href="{{ route('learning1',[$set->id, $set->language2_id]) }}">nauka
+                                                                                            1&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('learning2',[$set->id, $set->language2_id]) }}">nauka
+                                                                                            2&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('learning3',[$set->id, $set->language2_id]) }}">nauka
+                                                                                            3&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('learning4',[$set->id, $set->language2_id]) }}">nauka
+                                                                                            4&nbsp;</a></strong>
+                                                                                    <strong><a href="{{ route('test',[$set->id, $set->language2_id]) }}">test</a></strong>
+                                                                                </h6>
+                                                                            @endif
+
+                                                                        @endif
                                                                     @endif
                                                                 @endif
                                                             @endforeach

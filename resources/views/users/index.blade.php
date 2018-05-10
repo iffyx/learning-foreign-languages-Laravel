@@ -34,7 +34,6 @@
                 <td>{{ $user->role}}</td>
 
                 <td>
-                    <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Pokaż</a>
                     <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edytuj</a>
                     @if($user->role=='admin' ||$user->role=='user')
                         <a class="btn btn-primary disabled" href="{{ route('permissions.edit',$user->id) }}">Nadaj

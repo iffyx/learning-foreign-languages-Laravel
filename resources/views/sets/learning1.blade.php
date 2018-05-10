@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
-                <h2 class="text-center p-3">{{$set->subcategory}} ({{$set->name}})</h2>
+                <h3 class="text-center p-2">{{$set->subcategory}}</h3>
+                <h4 class="text-center p-2">{{$set->name}}</h4>
             </div>
         </div>
     </div>

@@ -18,6 +18,7 @@ class CreateSetTable extends Migration
             $table->string('name');
             $table->string('set');
             $table->boolean('private')->default(false);
+            $table->boolean('visible')->default(true);
             $table->integer('language1_id')->unsigned()->nullable();
             $table->integer('language2_id')->unsigned()->nullable();
             $table->integer('subcategory_id')->unsigned()->nullable();
@@ -35,7 +36,7 @@ class CreateSetTable extends Migration
         DB::table('sets')->insert(
             array(
                 'name' => 'Podstawowy',
-                'set' => 'matematyka;Math' . PHP_EOL . 'historia;History' . PHP_EOL . 'plastyka;Art' . PHP_EOL . 'biologia;Biology' . PHP_EOL . 'chemia;Chemistry' . PHP_EOL . 'angielski;English' . PHP_EOL . 'geografia;Geography',
+                'set' => 'matematyka;Maths' . PHP_EOL . 'historia;History' . PHP_EOL . 'plastyka;Art' . PHP_EOL . 'biologia;Biology' . PHP_EOL . 'chemia;Chemistry' . PHP_EOL . 'angielski;English' . PHP_EOL . 'geografia;Geography',
                 'language1_id' => 1,
                 'language2_id' => 2,
                 'private' => false,
@@ -59,7 +60,7 @@ class CreateSetTable extends Migration
         DB::table('sets')->insert(
             array(
                 'name' => 'Podstawowy',
-                'set' => 'grypa;flu' . PHP_EOL . 'gorączka;fever' . PHP_EOL . 'ból;ache' . PHP_EOL . 'katar;cold' . PHP_EOL . 'kaszel;cough',
+                'set' => 'grypa;flu' . PHP_EOL . 'gorączka;fever' . PHP_EOL . 'ból;ache' . PHP_EOL . 'przeziębienie;cold' . PHP_EOL . 'kaszel;cough',
                 'language1_id' => 1,
                 'language2_id' => 2,
                 'private' => false,
